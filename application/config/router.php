@@ -1,7 +1,17 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: Lenovo
- * Date: 29.04.2017
- * Time: 11:29
- */
+
+return [
+
+    '[NAME_ROUTE]' => [
+        'url_pattern' => '/product/<action>/<parametr>',
+        'default' => [
+            'controller' => 'Product',
+            'action' => 'index'
+        ],
+        'params' => [
+            'action' => '(index|view)',
+            'param' => '[0-9]+'
+        ]
+    ],
+
+];
