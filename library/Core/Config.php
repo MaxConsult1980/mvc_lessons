@@ -1,11 +1,14 @@
 <?php
 
-namespace Core;
 
+namespace Core;
 
 class Config {
 
     private static $_isInit = false;
+    /**
+     * @var self
+     */
     private static $_instance;
     private $configs = [];
 
@@ -19,31 +22,48 @@ class Config {
 
     }
 
-    public function getInstance()
-    {
+    public static function getInstance() {
         if(!self::$_instance instanceof Config) {
             self::$_instance = new self();
             self::$_isInit = true;
         }
 
         return self::$_instance;
-
     }
 
-    public static function load()
-    {
-        if(self::$_isInit === false){
+    public static function load($stringReturn = null) {
+        if(self::$_isInit == false) {
             self::getInstance();
         }
+        $result = self::$_instance->getConfig();
+        if(!$stringReturn) {
+            return $result;
+        }
 
-        return self::$_instance->getConfig();
+        $listsKeysGet = explode('.', $stringReturn);
+        $listReturn = [];
+        while ($keyGet = next($listsKeysGet)) {
+            if(array_key_exists($keyGet, $result)) {
+                $listReturn = $result[$keyGet];
+                continue;
+            }
+
+            if(array_key_exists($keyGet, $listReturn)) {
+                $listReturn = $listReturn[$keyGet];
+                continue;
+            }
+        }
+
+        return $listReturn;
     }
 
-    private function getConfig()
-    {
-      return $this->configs;
+    public function getConfig() {
+        return $this->configs;
     }
 
+    /**
+     * load files from config app dir.
+     */
     private function loadConfigs() {
         if(is_dir(CONFIG_PATH)) {
             $lists = scandir(CONFIG_PATH);
