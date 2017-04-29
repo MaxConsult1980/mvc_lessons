@@ -9,7 +9,6 @@ return [
             'action' => 'index'
         ]
     ],
-
     'viewPage' => [
         'url_pattern' => '/view',
         'default' => [
