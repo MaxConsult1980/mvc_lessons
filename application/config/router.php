@@ -10,6 +10,14 @@ return [
         ]
     ],
 
+    'viewPage' => [
+        'url_pattern' => '/view',
+        'default' => [
+            'controller' => 'Main',
+            'action' => 'view'
+        ]
+    ],
+
 //    '[NAME_ROUTE]' => [
 //        'url_pattern' => '/product/<action>/<parametr>',
 //        'default' => [
